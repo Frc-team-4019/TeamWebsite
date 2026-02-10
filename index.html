@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Team PalmBotics</title>
+  <title>Mechanical Paradise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Google Font -->
@@ -26,22 +26,14 @@
       margin: 0;
       font-family: "Montserrat", sans-serif;
       color: var(--dark);
-      background: linear-gradient(
-        to bottom,
-        var(--ocean),
-        var(--sand)
-      );
+      background: linear-gradient(to bottom, var(--ocean), var(--sand));
       min-height: 100vh;
     }
 
     header {
       padding: 4rem 1.5rem;
       text-align: center;
-      background: linear-gradient(
-        135deg,
-        var(--deep-ocean),
-        var(--ocean)
-      );
+      background: linear-gradient(135deg, var(--deep-ocean), var(--ocean));
       color: white;
     }
 
@@ -65,6 +57,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
+      z-index: 10;
     }
 
     nav a {
@@ -79,7 +72,7 @@
     }
 
     section {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 3rem auto;
       padding: 2rem;
       background: rgba(255, 255, 255, 0.85);
@@ -92,6 +85,7 @@
       color: var(--deep-ocean);
     }
 
+    /* Card layout (robot section) */
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -112,6 +106,36 @@
       color: var(--palm);
     }
 
+    /* Team Members */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .member {
+      text-align: center;
+      background: white;
+      padding: 1.25rem;
+      border-radius: 14px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .member img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 4px solid var(--palm);
+    }
+
+    .member-name {
+      margin-top: 0.75rem;
+      font-weight: bold;
+      color: var(--dark);
+    }
+
     footer {
       text-align: center;
       padding: 2rem;
@@ -128,21 +152,23 @@
 <body>
 
   <header>
-    <h1>🌴 FRC Team 4019 Mechanical Paridise </h1>
-    <p>Building robots. Catching waves. Competing hard.</p>
+    <h1>🌴 Mechanical Paradise 🤖</h1>
+    <p>Engineering excellence with island vibes</p>
   </header>
 
   <nav>
     <a href="#about">About</a>
     <a href="#robot">Our Robot</a>
-    <a href="#team">The Team</a>
+    <a href="#team">Team Members</a>
     <a href="#contact">Contact</a>
   </nav>
 
   <section id="about">
     <h2>About Us</h2>
     <p>
-      Team 4019 Mechanical Paridise is a cool team
+      Mechanical Paradise is a competitive robotics team focused on smart design,
+      clean code, and calm execution under pressure. We build robots that perform—
+      and we do it with style.
     </p>
   </section>
 
@@ -151,37 +177,63 @@
     <div class="cards">
       <div class="card">
         <h3>⚙️ Design</h3>
-        <p>
-          Lightweight, durable, and optimized for competition performance.
-        </p>
+        <p>Robust mechanisms built for reliability and speed.</p>
       </div>
       <div class="card">
         <h3>🧠 Software</h3>
-        <p>
-          Autonomous routines, smart controls, and clean, reliable code.
-        </p>
+        <p>Autonomous logic, driver control, and system safety.</p>
       </div>
       <div class="card">
         <h3>🚀 Strategy</h3>
-        <p>
-          Built to adapt quickly and score consistently under pressure.
-        </p>
+        <p>Adaptable gameplay designed to win matches.</p>
       </div>
     </div>
   </section>
 
   <section id="team">
-    <h2>The Team</h2>
+    <h2>Team Members</h2>
+    <p>Meet the people behind the robot.</p>
+
+    <div id="teamGrid" class="team-grid"></div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
     <p>
-      fire
+      📧 Email: <strong>mechanicalparadise@example.com</strong><br>
+      📍 Somewhere sunny ☀️
     </p>
   </section>
 
   <footer>
-    <p>
-      © 2026 <span> Team 4019 Mechanical Paridise </span>
-    </p>
+    <p>© 2026 <span>Mechanical Paradise</span> — Build cool. Stay cooler 🌊</p>
   </footer>
+
+  <script>
+    // === TEAM MEMBERS PLACEHOLDER ARRAY ===
+    // Drop .png images in the same folder and update this list
+
+    const teamMembers = [
+      { name: "Miles Merritt", image: "Miles.png" },
+      { name: "Cameron Lee", image: "Cameron.png" },
+      { name: "Rj Hermes", image: "Rj.png" },
+      { name: "Tyler Peck", image: "tyler.png" }
+    ];
+
+    const teamGrid = document.getElementById("teamGrid");
+
+    teamMembers.forEach(member => {
+      const div = document.createElement("div");
+      div.className = "member";
+
+      div.innerHTML = `
+        <img src="${member.image}" alt="${member.name}">
+        <div class="member-name">${member.name}</div>
+      `;
+
+      teamGrid.appendChild(div);
+    });
+  </script>
 
 </body>
 </html>
