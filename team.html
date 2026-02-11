@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="team4019.png" type="image/" href="images/team4019.png">
+  <meta charset="UTF-8">
   <title>Team | Mechanical Paradise</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../images/logo.png">
 
   <style>
     :root {
-      --palm: #2ec4b6;
+      --ocean: #00b4d8;
       --deep: #0077b6;
       --sand: #ffe8b6;
+      --palm: #2ec4b6;
       --dark: #023047;
     }
 
     body {
       margin: 0;
       font-family: Montserrat, sans-serif;
-      background: linear-gradient(to bottom, #00b4d8, var(--sand));
+      background: linear-gradient(to bottom, var(--ocean), var(--sand));
       color: var(--dark);
     }
 
@@ -27,8 +31,9 @@
       display: flex;
       justify-content: center;
       gap: 2rem;
-      background: white;
       padding: 1rem;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     nav a {
@@ -43,8 +48,16 @@
       padding: 2rem;
       background: rgba(255,255,255,0.9);
       border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
+    h2 {
+      margin-top: 0;
+      color: var(--deep);
+      text-align: center;
+    }
+
+    /* TEAM GRID */
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -53,11 +66,18 @@
     }
 
     .member {
-      text-align: center;
       background: white;
-      padding: 1rem;
       border-radius: 14px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .member:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
     .member img {
@@ -72,6 +92,61 @@
       margin-top: 0.75rem;
       font-weight: bold;
     }
+
+    .member-title {
+      font-size: 0.85rem;
+      color: var(--palm);
+      font-weight: 600;
+      margin-top: 0.25rem;
+    }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .modal-content img {
+      width: 160px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 4px solid var(--palm);
+    }
+
+    .modal-title {
+      color: var(--palm);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .close {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -84,36 +159,125 @@
 
 <section>
   <h2>Team Members</h2>
-  <p>The people who make Mechanical Paradise possible.</p>
+  <p style="text-align:center;">Click a member to read their full bio.</p>
 
   <div id="teamGrid" class="team-grid"></div>
 </section>
 
+<!-- BIO MODAL -->
+<div id="bioModal" class="modal hidden">
+  <div class="modal-content">
+    <span id="closeModal" class="close">&times;</span>
+    <img id="modalImage" alt="">
+    <h3 id="modalName"></h3>
+    <div id="modalTitle" class="modal-title"></div>
+    <p id="modalBio"></p>
+  </div>
+</div>
+
 <script>
-  // === EDIT THIS ARRAY ===
   const teamMembers = [
-    { name: "Tyler Peck", job: "Mentor", image: "images/People/tyler.png" },
-    { name: "Cameron Lee",job: "Scripter", image: "images/People/Cameron.png" },
-    { name: "Christopher Laurence", job: "Builder", image: "images/People/Chris.png" },
-    { name: "RJ Hermes", job: "Builder", image: "images/People/Rj.png" },
-    { name: "Dash Knight", job: "Builder", image: "images/People/Dash.png" },
-    { name: "Sid Krishna", job: "Builder", image: "images/People/Sid.png" },
-    { name: "Wyatt Cohen", job: "Builder", image: "images/People/Wyatt.png" },
-    { name: "Bixby Howell", job: "Builder/CAD Specialist", image: "images/People/Bixby.png" },
-    { name: "Miles Merritt", job: "Scripter" , image: "images/People/Miles.png" },
-    { name: "Nehe Pierre-Louis", job: "Scripter", image: "images/People/Nehe.png" }
+    {
+      name: "Tyler Peck",
+      title: "Mentor",
+      image: "../images/people/Tyler.png",
+      bio: "our lord and savior Tyler Peck"
+    },
+    {
+      name: "Cameron Lee",
+      title: "Lead Programmer",
+      image: "../images/people/Cameron.png",
+      bio: "Develops autonomous routines and driver controls."
+    },
+    {
+      name: "Christopher Laurence",
+      title: "Mechanical Lead",
+      image: "../images/people/Chris.png",
+      bio: "Builds things and causes chaos"
+    },
+    {
+      name: "RJ Hermes",
+      title: "Builder",
+      image: "../images/people/Rj.png",
+      bio: "Builds things, and Also the former website manager."
+    },
+    {
+      name: "Dash Knight",
+      title: "Builder",
+      image: "../images/people/Dash.png",
+      bio: "hammer time!"
+    },
+    {
+      name: "Sid krishna",
+      title: "Builder",
+      image: "../images/people/Sid.png",
+      bio: "gas gas gas."
+    },
+    {
+      name: "Wyatt cohen",
+      title: "Builder",
+      image: "../images/people/Wyatt.png",
+      bio: "ASSORTED MEDIA, ASSEMBLE!"
+    },
+    {
+      name: "Bixby Howell",
+      title: "Builder",
+      image: "../images/people/Bixby.png",
+      bio: "made the CAD schematic for this year's bot"
+    },
+    {
+      name: "Miles Merritt",
+      title: "Scripter",
+      image: "../images/people/Miles.png",
+      bio: "Hi, I built this website"
+    },
+    {
+      name: "Nehe Pierre-Louis",
+      title: "Scripter",
+      image: "../images/people/Tyler.png",
+      bio: "who wants to hold the tungsten cube?"
+    }
+    
   ];
 
   const grid = document.getElementById("teamGrid");
+  const modal = document.getElementById("bioModal");
 
-  teamMembers.forEach(m => {
-    const div = document.createElement("div");
-    div.className = "member";
-    div.innerHTML = `
-      <img src="${m.image}" alt="${m.name}">
-      <div class="member-name">${m.name}</div>
+  const modalImage = document.getElementById("modalImage");
+  const modalName = document.getElementById("modalName");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalBio = document.getElementById("modalBio");
+  const closeModal = document.getElementById("closeModal");
+
+  teamMembers.forEach(member => {
+    const card = document.createElement("div");
+    card.className = "member";
+
+    card.innerHTML = `
+      <img src="${member.image}" alt="${member.name}">
+      <div class="member-name">${member.name}</div>
+      <div class="member-title">${member.title}</div>
     `;
-    grid.appendChild(div);
+
+    card.addEventListener("click", () => {
+      modalImage.src = member.image;
+      modalName.textContent = member.name;
+      modalTitle.textContent = member.title;
+      modalBio.textContent = member.bio;
+      modal.classList.remove("hidden");
+    });
+
+    grid.appendChild(card);
+  });
+
+  closeModal.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.add("hidden");
+    }
   });
 </script>
 
